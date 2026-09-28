@@ -1,0 +1,29 @@
+# 行尾统一策略。
+#
+# 没有这个文件，仓库里换行符长什么样取决于每个提交者本机的 core.autocrlf，
+# 同一次 `git diff` 会整文件全红。
+#
+# 对本项目尤其要紧的是**语料文件**：四本古籍从 Project Gutenberg 下载，
+# 原文是 CRLF；如果被某次提交转成 LF，行数不变但字节全变，
+# 清洗和编码的结果就会跟着变，实测结论也就复现不出来了。
+
+* text=auto
+
+# 语料和源码里的换行：统一 LF，保证任何人 clone 下来清洗结果一致
+*.txt  text eol=lf
+*.py   text eol=lf
+*.md   text eol=lf
+*.csv  text eol=lf
+*.json text eol=lf
+
+# Windows 批处理：必须 CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# 二进制文件：一个字节都不许转，否则数据直接损坏
+*.pt   binary
+*.bin  binary
+*.npy  binary
+*.png  binary
+*.jpg  binary
+*.zip  binary
