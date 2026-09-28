@@ -16,14 +16,14 @@
 
 为什么用这个任务而不用语言：
     它有唯一正确答案，所以能用「准确率」而不是「loss 好不好看」来判断。
-    语言任务的 loss 从 2.5 降到 2.3 你可能看不出来发生了什么，
+    语言任务的 loss 从 2.5 降到 2.3 看不出发生了什么，
     但准确率从 3% 涨到 98%，没有任何歧义。
     这就是「真懂没真懂」的检验方式。
 
 运行：
-    "C:/Program Files/ComfyUI-aki-v3/python/python.exe" step2_seq2seq.py
+    python step2_seq2seq.py
 对比正弦编码与可学习编码：
-    "C:/Program Files/ComfyUI-aki-v3/python/python.exe" step2_seq2seq.py --pos sinusoidal
+    python step2_seq2seq.py --pos sinusoidal
 """
 
 import sys
@@ -118,7 +118,7 @@ def sinusoidal_encoding(T, d):
     论文的猜测是——不同频率的波形让模型能通过线性组合表达相对位置，
     而且能外推到训练时没见过的长度。后面这个说法一直被怀疑，
     但直到今天很多模型还在用它（或它的变体 RoPE）。
-    在这个脚本里你可以亲手验证一下：训练时最长 8，测试时给 12，看看会不会崩。
+    在本脚本里可以直接验证一下：训练时最长 8，测试时给 12，看看会不会崩。
 
     i 从 0 到 d/2，所以偶数维填 sin、奇数维填 cos，两两一组。
     """
@@ -132,7 +132,7 @@ def sinusoidal_encoding(T, d):
 
 
 class PositionalEncoding(nn.Module):
-    """可切换两种实现，好让你对比。"""
+    """可切换两种实现，便于对照。"""
 
     def __init__(self, d_model, max_len, mode="learned"):
         super().__init__()
